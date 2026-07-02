@@ -31,6 +31,7 @@ const
 var
   BaseAddr:HMODULE;
   GeeUnPack:TGeeFun;
+  GeePack:TGeeFun;
 {$R *.res}
 function CloseDlg(): Integer; stdcall; external 'GuiEdit.dll';
 function GetDllBaseAddress(const DllName: string): HMODULE;
@@ -42,6 +43,14 @@ begin
     RaiseLastOSError;
 end;
 
+function Pack(Input: PByte; Output: PByte; Size:Integer): Integer; stdcall;
+var
+  KeyDataCopy: array[0..147] of Byte;
+begin
+  Move(KeyData, KeyDataCopy, SizeOf(KeyData));
+  Result := GeePack(Input, Output, Size, @KeyDataCopy, @KeyDataCopy[20]);
+end;
+
 function UnPack(Input: PByte; Output: PByte; Size:Integer): Integer; stdcall;
 var
   KeyDataCopy: array[0..147] of Byte;
@@ -51,12 +60,13 @@ begin
 end;
 
 exports
-  UnPack, CloseDlg;
+  Pack, UnPack, CloseDlg;
 
 begin
   try
     BaseAddr := GetDllBaseAddress('GuiEdit.dll');
     GeeUnPack := TGeeFun(BaseAddr + $101984);
+    GeePack := TGeeFun(BaseAddr + $1018C4);
   except
     on E: Exception do
       ShowMessage(E.Message);

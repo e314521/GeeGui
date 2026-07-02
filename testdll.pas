@@ -11,8 +11,10 @@ type
     Button1: TButton;
     Memo1: TMemo;
     Memo2: TMemo;
+    Button2: TButton;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -21,6 +23,7 @@ type
 
 var
   Form1: TForm1;
+function Pack(Input: PByte; Output: PByte; Size:Integer): Integer; stdcall; external 'GeeGui.dll';
 function UnPack(Input: PByte; Output: PByte; Size:Integer): Integer; stdcall; external 'GeeGui.dll';
 implementation
 
@@ -41,13 +44,7 @@ begin
     Inc(P);
   end;
 end;
-
 procedure TForm1.Button1Click(Sender: TObject);
-const
-  Input1 : array[0..39] of Byte = (
-    $F8, $66, $72, $F0, $41, $16, $FE, $45, $D3, $8F, $8F, $8F, $31, $8F, $8F, $8F, 
-	  $9F, $8F, $8F, $8F, $EE, $4F, $4B, $D9, $EF, $BA, $42, $5F, $D9, $8F, $8F, $8F,
-	  $31, $8F, $8F, $8F, $9F, $8F, $8F, $8F);
 var
   Input : array[0..65535] of Byte;
   Output : array[0..65535] of Byte;
@@ -75,4 +72,31 @@ begin
   Position := poScreenCenter;
 end;
 
+
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  Input : array[0..65535] of Byte;
+  Output : array[0..65535] of Byte;
+  HexStr: string;
+  Len: Integer;
+begin
+  Memo2.Text := '';
+  HexStr := Memo1.Lines.Text;
+  HexStr := StringReplace(HexStr, #13#10, '', [rfReplaceAll]);
+  Len := Length(HexStr);
+  if Len mod 2 <> 0 then
+    begin
+      ShowMessage('错误：十六进制字符串长度必须为偶数！');
+      Exit;
+    end;
+  Len := HexToBin(PChar(HexStr), @Input, Len div 2);
+  Pack(@Input, @Output, Len);
+  HexStr := BytesToHex(Output, Len);
+  Memo2.Text := HexStr;
+
+end;
+
 end.
+
+

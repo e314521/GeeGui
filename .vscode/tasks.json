@@ -6,7 +6,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "${workspaceFolder}\\Delphi7\\bin\\dcc32.exe -B ${workspaceFolder}\\test.dpr",
+            "command": "${workspaceFolder}\\Delphi7\\bin\\dcc32.exe -B -E.\\GameLogin -N.\\temp .\\test.dpr",
             "args": [],
             "group": {
                 "kind": "build",
@@ -20,7 +20,7 @@
         },{
             "label": "build-dll",
             "type": "shell",
-            "command": "${workspaceFolder}\\Delphi7\\bin\\dcc32.exe -B ${workspaceFolder}\\GeeGui.dpr",
+            "command": "${workspaceFolder}\\Delphi7\\bin\\dcc32.exe -B -E.\\GameLogin -N.\\temp .\\GeeGui.dpr",
             "args": [],
             "group": {
                 "kind": "build",

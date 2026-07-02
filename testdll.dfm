@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 950
-  Top = 264
+  Left = 958
+  Top = 270
   Width = 484
   Height = 393
   Caption = 'Form1'
@@ -52,5 +52,14 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 2
+  end
+  object Button2: TButton
+    Left = 88
+    Top = 160
+    Width = 75
+    Height = 25
+    Caption = #21152#23494
+    TabOrder = 3
+    OnClick = Button2Click
   end
 end
