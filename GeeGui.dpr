@@ -33,7 +33,7 @@ var
   GeeUnPack:TGeeFun;
   GeePack:TGeeFun;
 {$R *.res}
-function CloseDlg(): Integer; stdcall; external 'GuiEdit.dll';
+function CloseDlg(): Integer; stdcall; external 'GuiEdit1.dll';
 function GetDllBaseAddress(const DllName: string): HMODULE;
 begin
   // GetModuleHandle 返回 HMODULE，它本质上就是基地址
@@ -64,7 +64,7 @@ exports
 
 begin
   try
-    BaseAddr := GetDllBaseAddress('GuiEdit.dll');
+    BaseAddr := GetDllBaseAddress('GuiEdit1.dll');
     GeeUnPack := TGeeFun(BaseAddr + $101984);
     GeePack := TGeeFun(BaseAddr + $1018C4);
   except
